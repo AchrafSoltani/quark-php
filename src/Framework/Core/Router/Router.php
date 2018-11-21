@@ -25,10 +25,13 @@ class Router
 
         foreach ($finder as $file)
         {
-            $path =  str_replace('Controller.php', '', $file->getRelativePathname());
-            $controller = str_replace('.php', '', $file->getFilename());
-            $namespace = 'App\\Controller\\'.str_replace('/', '\\', $path).'Controller';
-            $this->routes[] = new Route($path, $controller, $file->getRelativePathname(), $namespace);
+            $controller = explode('/', $file->getRelativePathname());
+            if(count($controller) == 3)
+            {
+                $path =  str_replace('Controller.php', '', $file->getRelativePathname());
+                $namespace = 'App\\Controller\\'.str_replace('/', '\\', $path).'Controller';
+                $this->routes[] = new Route($namespace, $controller[0], $controller[1], str_replace('Controller.php', '', $controller[2]));
+            }
         }
     }
 
@@ -56,10 +59,17 @@ class Router
         // TODO : add support for default Index controller without it being part of the request path
         foreach ($this->routes as $route)
         {
-            if(strtolower('/'.$route->getPath()) == strtolower($request_path))
+            $request_path = ltrim($request_path, '/');
+            $explode = explode('/', $request_path);
+            if(count($explode) == 2)
+            {
+                $request_path = $explode[0] . '/' . $explode[1] . '/Index';
+            }
+            if(strtolower($route->getPath()) == strtolower($request_path))
             {
                 return $route;
             }
+
         }
         throw new RouteNotFoundException('Error 404', 404);
     }

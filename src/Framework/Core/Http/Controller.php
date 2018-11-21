@@ -24,6 +24,13 @@ class Controller
     {
         // TODO : add template not found exception
         $request_path = $this->container->getRequest()->getUri()->getPath();
+        $request_path = ltrim($request_path, '/');
+        $explode = explode('/', $request_path);
+        if(count($explode) == 2)
+        {
+            $request_path = $explode[0] . '/' . $explode[1] . '/Index';
+        }
+
         return $this->container->get('twig')->render(strtolower($request_path).'.twig', $data);
     }
 }

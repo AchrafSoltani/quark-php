@@ -12,65 +12,17 @@ namespace Quark\Framework\Core\Router;
 
 class Route
 {
-    private $path;
-    private $controller;
-    private $file;
     private $namespace;
+    private $package;
+    private $module;
+    private $action;
 
-    public function __construct($path, $controller, $file, $namespace)
+    public function __construct($namespace, $package, $module, $action)
     {
-        $this->path = $path;
-        $this->controller = $controller;
-        $this->file = $file;
         $this->namespace = $namespace;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPath()
-    {
-        return $this->path;
-    }
-
-    /**
-     * @param mixed $path
-     */
-    public function setPath($path): void
-    {
-        $this->path = $path;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getController()
-    {
-        return $this->controller;
-    }
-
-    /**
-     * @param mixed $controller
-     */
-    public function setController($controller): void
-    {
-        $this->controller = $controller;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFile()
-    {
-        return $this->file;
-    }
-
-    /**
-     * @param mixed $file
-     */
-    public function setFile($file): void
-    {
-        $this->file = $file;
+        $this->package = $package;
+        $this->module = $module;
+        $this->action = $action;
     }
 
     /**
@@ -87,5 +39,58 @@ class Route
     public function setNamespace($namespace): void
     {
         $this->namespace = $namespace;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPackage()
+    {
+        return $this->package;
+    }
+
+    /**
+     * @param mixed $package
+     */
+    public function setPackage($package): void
+    {
+        $this->package = $package;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModule()
+    {
+        return $this->module;
+    }
+
+    /**
+     * @param string $module
+     */
+    public function setModule($module): void
+    {
+        $this->module = $module;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * @param mixed $action
+     */
+    public function setAction($action): void
+    {
+        $this->action = $action;
+    }
+
+    public function getPath()
+    {
+        return $this->package . '/' . $this->module . '/' . $this->action;
     }
 }
