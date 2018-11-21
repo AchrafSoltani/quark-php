@@ -9,15 +9,21 @@
 
 namespace Quark\Framework\Core\Http;
 
-use Quark\Framework\Core\Container;
+use Quark\Framework\Application\Application;
 
 class Controller
 {
     protected $container;
 
-    public function __construct(Container $container)
+    public function __construct(Application $container)
     {
         $this->container = $container;
     }
 
+    public function renderView($data = array())
+    {
+        // TODO : add template not found exception
+        $request_path = $this->container->getRequest()->getUri()->getPath();
+        return $this->container->get('twig')->render(strtolower($request_path).'.twig', $data);
+    }
 }

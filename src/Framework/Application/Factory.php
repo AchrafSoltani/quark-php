@@ -11,5 +11,17 @@ namespace Quark\Framework\Application;
 
 class Factory
 {
+    public static function build($basePath)
+    {
+        return new Application($basePath);
+    }
 
+    public static function bootstrap($basePath)
+    {
+        $config = array();
+
+        $config['templating'] = include $basePath . '/app/config/templating.php';
+
+        return $config;
+    }
 }

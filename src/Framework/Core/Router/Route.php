@@ -15,12 +15,14 @@ class Route
     private $path;
     private $controller;
     private $file;
+    private $namespace;
 
-    public function __construct($path, $controller, $file)
+    public function __construct($path, $controller, $file, $namespace)
     {
         $this->path = $path;
         $this->controller = $controller;
         $this->file = $file;
+        $this->namespace = $namespace;
     }
 
     /**
@@ -71,4 +73,19 @@ class Route
         $this->file = $file;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getNamespace()
+    {
+        return $this->namespace;
+    }
+
+    /**
+     * @param mixed $namespace
+     */
+    public function setNamespace($namespace): void
+    {
+        $this->namespace = $namespace;
+    }
 }

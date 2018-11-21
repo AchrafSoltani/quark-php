@@ -8,6 +8,7 @@
  */
 
 namespace Quark\Framework\Core\Router;
+use Quark\Framework\Core\Router\Exception\RouteNotFoundException;
 use Symfony\Component\Finder\Finder;
 
 
@@ -26,7 +27,8 @@ class Router
         {
             $path =  str_replace('Controller.php', '', $file->getRelativePathname());
             $controller = str_replace('.php', '', $file->getFilename());
-            $this->routes[] = new Route($path, $controller, $file->getRelativePathname());
+            $namespace = 'App\\Controller\\'.str_replace('/', '\\', $path).'Controller';
+            $this->routes[] = new Route($path, $controller, $file->getRelativePathname(), $namespace);
         }
     }
 
@@ -48,13 +50,10 @@ class Router
 
     public function dispatch($request)
     {
-        // TODO : properly dipatch request to the proper controller
-
         $request_path = $request->getUri()->getPath();
         $request_method = $request->getMethod();
 
         // TODO : add support for default Index controller without it being part of the request path
-        // TODO : add error handling // in case controller not found
         foreach ($this->routes as $route)
         {
             if(strtolower('/'.$route->getPath()) == strtolower($request_path))
@@ -62,7 +61,6 @@ class Router
                 return $route;
             }
         }
-
-
+        throw new RouteNotFoundException('Error 404', 404);
     }
 }
