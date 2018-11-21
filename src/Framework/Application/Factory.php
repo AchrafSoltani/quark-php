@@ -21,6 +21,7 @@ class Factory
         $config = array();
 
         $config['templating'] = include $basePath . '/app/config/templating.php';
+        $config['database'] = include $basePath . '/app/config/database.php';
 
         return $config;
     }
