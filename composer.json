@@ -15,7 +15,8 @@
         "zendframework/zend-diactoros": "^2.0",
         "symfony/finder": "^4.1",
         "league/container": "^3.2",
-        "twig/twig": "^2.0"
+        "twig/twig": "^2.0",
+        "doctrine/dbal": "^2.8"
     },
     "require-dev": {
 		"phpunit/phpunit": "6.*"
